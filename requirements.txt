@@ -1,4 +1,5 @@
 numpy
+python==3.10.12
 pandas
 streamlit
 scikit-learn==1.2.2
