@@ -4,7 +4,6 @@ import pandas as pd
 import numpy as np
 import os
 import time
-import joblib
 
 
 icon = "icon.png"
@@ -67,8 +66,7 @@ if st.button('Predict'):
         
         # Load the pre-trained model (the one that performs best)
         with open('pipe.pkl', 'rb') as file:
-            model = joblib.load(file)
-            #model = pickle.load(file)
+            model = pickle.load(file)
 
     else :
         st.write(f'Selected Model: \t {to_use}')
