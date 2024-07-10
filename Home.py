@@ -5,6 +5,24 @@ import numpy as np
 import os
 import time
 
+##
+# Function to adjust dtype if necessary
+def adjust_dtype(model):
+    expected_dtype = np.dtype([
+        ('left_child', '<i8'), ('right_child', '<i8'), ('feature', '<i8'),
+        ('threshold', '<f8'), ('impurity', '<f8'), ('n_node_samples', '<i8'),
+        ('weighted_n_node_samples', '<f8'), ('missing_go_to_left', 'u1')
+    ])
+    
+    actual_dtype = model.tree_.__getstate__()['nodes'].dtype
+    
+    if actual_dtype != expected_dtype:
+        nodes = model.tree_.__getstate__()['nodes'].astype(expected_dtype)
+        state = model.tree_.__getstate__()
+        state['nodes'] = nodes
+        model.tree_.__setstate__(state)
+
+##
 
 icon = "icon.png"
 st.logo(icon)
@@ -67,6 +85,7 @@ if st.button('Predict'):
         # Load the pre-trained model (the one that performs best)
         with open('pipe.pkl', 'rb') as file:
             model = pickle.load(file)
+            adjust_dtype(model)
 
     else :
         st.write(f'Selected Model: \t {to_use}')
