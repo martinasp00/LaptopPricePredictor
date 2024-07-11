@@ -3,10 +3,8 @@ import pickle
 import pandas as pd
 import numpy as np
 import os
-import time
 
 icon = "icon.png"
-# st.sidebar.markdown("LAPTOP PRICE ORACLE")
 st.sidebar.image(icon, caption=None, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
 
 # Define the feature names
@@ -18,10 +16,10 @@ feature_names = [
 # Create the Streamlit app
 st.title('Laptop Price Predictor')
 
-data = pd.read_csv("preprocesseddata.csv", index_col=0)
+data = pd.read_csv("csv/preprocesseddata.csv", index_col=0)
 
 # Store the RMSE to compute the Prediction Interval
-df_rmse = pd.read_csv("rmse.csv", index_col='Model')
+df_rmse = pd.read_csv("csv/rmse.csv", index_col='Model')
 dict_rmse = dict(zip(df_rmse.index, df_rmse.RMSE))
 
 
@@ -107,9 +105,6 @@ if st.button('Predict'):
     # Calculate the exponential of the predicted value
     exp_prediction = np.exp(prediction[0])
     str_prediction = str(round(exp_prediction,2))
-
-    #with st.spinner('Wait for it...'):
-    #    time.sleep(2)
 
     # Display the prediction
     st.title('Predicted Price:')
