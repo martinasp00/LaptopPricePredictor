@@ -12,7 +12,7 @@ st.sidebar.image(icon, caption=None, width=None, use_column_width=None, clamp=Fa
 # Define the feature names
 feature_names = [
     'Company', 'TypeName', 'RAM(GB)', 'OpSys', 'Weight(kg)',
-    'TouchScreen', 'IPS', 'PPI', 'CPU', 'HDD', 'SSD', 'GPU brand'
+    'TouchScreen', 'IPS', 'PPI', 'CPU', 'HDD', 'SSD', 'GPU Brand'
 ]
 
 # Create the Streamlit app
@@ -58,7 +58,7 @@ input_data['PPI'] = None
 input_data['CPU'] = st.selectbox('CPU', data['CPU'].unique())
 input_data['HDD'] = st.number_input('HDD (GB)', min_value=0, step=128)
 input_data['SSD'] = st.number_input('SSD (GB)', min_value=0, step=128)
-input_data['GPU brand'] = st.selectbox('GPU brand', data['GPU brand'].unique())
+input_data['GPU Brand'] = st.selectbox('GPU Brand', data['GPU Brand'].unique())
 
 
 # When the user clicks the 'Predict' button
