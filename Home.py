@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import os
 import time
+import joblib 
 
 icon = "icon.png"
 st.logo(icon)
@@ -65,13 +66,16 @@ if st.button('Predict'):
         # Load the pre-trained model (the one that performs best)
         with open('pipe.pkl', 'rb') as file:
             model = pickle.load(file)
-
+    else :
+        with open(f'pipes/pipe_lr.sav', 'rb') as file:
+            model = joblib.load(file)
+'''
     else :
         st.write(f'Selected Model: \t {to_use}')
         st.write(f'opening: pipes/pipe_{models[to_use]}.pkl')
         with open(f'pipes/pipe_{models[to_use]}.pkl', 'rb') as file:
             model = pickle.load(file)
-
+'''
     # Convert categorical binary inputs to numeric
     input_data['TouchScreen'] = 1 if input_data['TouchScreen'] == 'Yes' else 0
     input_data['IPS'] = 1 if input_data['IPS'] == 'Yes' else 0
