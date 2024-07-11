@@ -12,13 +12,13 @@ st.sidebar.image(icon, caption=None, width=None, use_column_width=None, clamp=Fa
 # Define the feature names
 feature_names = [
     'Company', 'TypeName', 'RAM(GB)', 'OpSys', 'Weight(kg)',
-    'TouchScreen', 'IPS', 'PPI', 'CPU', 'HDD', 'SSD', 'GPU Brand'
+    'TouchScreen', 'IPS', 'PPI', 'CPU', 'HDD', 'SSD', 'GPU brand'
 ]
 
 # Create the Streamlit app
 st.title('Laptop Price Predictor')
 
-data = pd.read_csv("preprocesseddata.csv")
+data = pd.read_csv("preprocesseddata.csv", index_col=0)
 
 # Store the RMSE to compute the Prediction Interval
 df_rmse = pd.read_csv("rmse.csv", index_col='Model')
@@ -58,7 +58,7 @@ input_data['PPI'] = None
 input_data['CPU'] = st.selectbox('CPU', data['CPU'].unique())
 input_data['HDD'] = st.number_input('HDD (GB)', min_value=0, step=128)
 input_data['SSD'] = st.number_input('SSD (GB)', min_value=0, step=128)
-input_data['GPU Brand'] = st.selectbox('GPU Brand', data['GPU Brand'].unique())
+input_data['GPU brand'] = st.selectbox('GPU Brand', data['GPU Brand'].unique())
 
 
 # When the user clicks the 'Predict' button
