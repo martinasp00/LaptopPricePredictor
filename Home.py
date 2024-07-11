@@ -109,11 +109,13 @@ if st.button('Predict'):
     # Display the prediction
     st.title('Predicted Price:')
     # st.title(f':green[€{exp_prediction:.2f}]')
-    st.markdown(f"<h1 style='text-align: center; color: #168118;'>€ {str_prediction}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center; color: #168118;'><span style='color:#FFD700;'>€</span> {str_prediction}</h1>", unsafe_allow_html=True)
     st.title('Prediction Interval: ')
     # st.title(f'€{exp_prediction:.2f} - :red[{2*rmse:.2f}]; {exp_prediction:.2f} + :red[{2*rmse:.2f}]')
     lb = np.exp(prediction[0] - 2*rmse)
     ub = np.exp(prediction[0] + 2*rmse)
-    st.markdown(f"<h1 style='text-align: center; color: #168118;'>€ [{lb:.2f}; {ub:.2f}]</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center;'><span style='color:#FFD700;'>€</span> [ <span style='color: #168118;'>{lb:.2f}</span>; <span style='color: #168118;'>{ub:.2f} </span>]</h1>", unsafe_allow_html=True)
+
+
 
 
