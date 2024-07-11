@@ -4,10 +4,8 @@ import pandas as pd
 import numpy as np
 import os
 import time
-import joblib 
 
 icon = "icon.png"
-# st.sidebar.markdown("LAPTOP PRICE ORACLE")
 st.sidebar.image(icon, caption=None, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
 
 # Define the feature names
@@ -20,6 +18,11 @@ feature_names = [
 st.title('Laptop Price Predictor')
 
 data = pd.read_csv("preprocesseddata.csv")
+
+# Store the RMSE to compute the Prediction Interval
+df_rmse = pd.read_csv("rmse.csv", index_col='Model')
+dict_rmse = dict(zip(df_rmse.index, df_rmse.RMSE))
+
 
 # Decide model to use 
 default_model = st.toggle("Default Model", True)
@@ -62,15 +65,23 @@ if st.button('Predict'):
 
     if default_model:
         st.write("Selected Default Model: Random Forest")
+        rmse = np.exp(dict_rmse['Default'])
+        #st.write(rmse)
         # Load the pre-trained model (the one that performs best)
         with open('pipe.pkl', 'rb') as file:
             model = pickle.load(file)
+
     else :
         st.write(f'Selected Model: \t {to_use}')
         st.write(f'opening: pipes/pipe_{models[to_use]}.pkl')
+
+        rmse = np.exp(dict_rmse[to_use])
+        #st.write(rmse)
+        #st.write(f'Prediction Interval computed using RMSE: \t {rmse}')
         with open(f'pipes/pipe_{models[to_use]}.pkl', 'rb') as file:
             model = pickle.load(file)
-            
+
+
     # Convert categorical binary inputs to numeric
     input_data['TouchScreen'] = 1 if input_data['TouchScreen'] == 'Yes' else 0
     input_data['IPS'] = 1 if input_data['IPS'] == 'Yes' else 0
@@ -101,8 +112,10 @@ if st.button('Predict'):
 
     # Display the prediction
     st.title('Predicted Price:')
-    #st.title(f':green[€{exp_prediction:.2f}]')
+    # st.title(f':green[€{exp_prediction:.2f}]')
     st.markdown(f"<h1 style='text-align: center; color: #168118;'>€ {str_prediction}</h1>", unsafe_allow_html=True)
-    #st.title('Prediction Interval: ')
-    #st.title(f'€{exp_prediction:.2f} - :red[10]; {exp_prediction:.2f} + :red[10]')
+    st.title('Prediction Interval: ')
+    # st.title(f'€{exp_prediction:.2f} - :red[{2*rmse:.2f}]; {exp_prediction:.2f} + :red[{2*rmse:.2f}]')
+    st.markdown(f"<h1 style='text-align: center; color: #168118;'>€ [{exp_prediction - 2*rmse:.2f}; {exp_prediction + 2*rmse:.2f}]</h1>", unsafe_allow_html=True)
+
 
