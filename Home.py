@@ -7,7 +7,6 @@ import time
 import joblib 
 
 icon = "icon.png"
-st.logo(icon)
 # st.sidebar.markdown("LAPTOP PRICE ORACLE")
 st.sidebar.image(icon, caption=None, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
 
