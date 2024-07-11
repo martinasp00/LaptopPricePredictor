@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 
-df = pd.read_csv('performance_obtained.csv', index_col=0)
-df_paper = pd.read_csv('paper_performance.csv', index_col=0)
+df = pd.read_csv('csv/performance_obtained.csv', index_col=0)
+df_paper = pd.read_csv('csv/paper_performance.csv', index_col=0)
 
 st.title("Performance Obtained")
 st.dataframe(df, use_container_width=True)
