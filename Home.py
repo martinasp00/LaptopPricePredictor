@@ -6,6 +6,8 @@ import os
 import time
 
 icon = "icon.png"
+st.logo(icon)
+# st.sidebar.markdown("LAPTOP PRICE ORACLE")
 st.sidebar.image(icon, caption=None, width=None, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
 
 # Define the feature names
@@ -65,7 +67,7 @@ if st.button('Predict'):
 
     if default_model:
         st.write("Selected Default Model: Random Forest")
-        rmse = np.exp(dict_rmse['Default'])
+        rmse = dict_rmse['Default']
         #st.write(rmse)
         # Load the pre-trained model (the one that performs best)
         with open('pipe.pkl', 'rb') as file:
@@ -75,7 +77,7 @@ if st.button('Predict'):
         st.write(f'Selected Model: \t {to_use}')
         st.write(f'opening: pipes/pipe_{models[to_use]}.pkl')
 
-        rmse = np.exp(dict_rmse[to_use])
+        rmse = dict_rmse[to_use]
         #st.write(rmse)
         #st.write(f'Prediction Interval computed using RMSE: \t {rmse}')
         with open(f'pipes/pipe_{models[to_use]}.pkl', 'rb') as file:
@@ -116,6 +118,8 @@ if st.button('Predict'):
     st.markdown(f"<h1 style='text-align: center; color: #168118;'>€ {str_prediction}</h1>", unsafe_allow_html=True)
     st.title('Prediction Interval: ')
     # st.title(f'€{exp_prediction:.2f} - :red[{2*rmse:.2f}]; {exp_prediction:.2f} + :red[{2*rmse:.2f}]')
-    st.markdown(f"<h1 style='text-align: center; color: #168118;'>€ [{exp_prediction - 2*rmse:.2f}; {exp_prediction + 2*rmse:.2f}]</h1>", unsafe_allow_html=True)
+    lb = np.exp(prediction[0] - 2*rmse)
+    ub = np.exp(prediction[0] + 2*rmse)
+    st.markdown(f"<h1 style='text-align: center; color: #168118;'>€ [{lb:.2f}; {ub:.2f}]</h1>", unsafe_allow_html=True)
 
 
