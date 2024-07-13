@@ -1,1 +1,1 @@
-the 'tex.zip' file contains the tex file where we wrote the project documentation
+the 'tex.zip' file contains the tex file where we wrote the project documentation (LaptopPricePredictor/report.pdf)
